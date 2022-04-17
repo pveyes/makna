@@ -121,11 +121,10 @@ async function storeWordDefinition(word, definitions) {
   )
 }
 
-
-async function getAllWordsDefinition(lastWord) {
+async function getAllWordsDefinition(lastWord, characterLength) {
   const res = await request('https://kbbi.vercel.app');
   const { entries } = await res.body.json();
-  const words = entries
+  let words = entries
     .flatMap(entry => {
       const [rawWord] = entry.split("/").reverse();
       const word = decodeURIComponent(rawWord);
@@ -135,6 +134,10 @@ async function getAllWordsDefinition(lastWord) {
 
       return word;
     })
+
+  if (characterLength) {
+    words = words.filter(w => w.length === characterLength);
+  }
 
   const startIndex = lastWord ? words.indexOf(lastWord) + 1 : 0;
   const remainingWords = words.slice(startIndex);
@@ -199,6 +202,11 @@ async function getKatlaWordsDefinition(lastWord) {
 const word = process.argv[2];
 
 switch (word) {
+  case 'len':
+    const length = parseInt(process.argv[3]);
+    const lastWord = process.argv[4];
+    getAllWordsDefinition(lastWord, length);
+    break;
   case 'all': {
     const lastWord = process.argv[3] ?? 0
     getAllWordsDefinition(lastWord);
