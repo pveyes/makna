@@ -1,0 +1,8 @@
+{
+  "name": "makna",
+  "compatibility_date": "2025-03-14",
+  "assets": {
+    "directory": "./data",
+    "not_found_handling": "single-page-application"
+  }
+}
