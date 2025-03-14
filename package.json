@@ -1,9 +1,0 @@
-{
-  "name": "makna",
-  "version": "0.1.0",
-  "private": true,
-  "devDependencies": {
-    "cheerio": "^1.0.0-rc.10",
-    "undici": "^4.14.1"
-  }
-}
